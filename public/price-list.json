@@ -1,0 +1,27 @@
+{
+  "items": {
+    "Big Mac": 4.50,
+    "Medium Fries": 2.50,
+    "Medium Coke": 2.25,
+    "McChicken": 4.25,
+    "Small Fries": 2.00,
+    "Small Coke": 2.00
+  },
+  "combos": [
+    {
+      "name": "Big Mac Menu",
+      "items": ["Big Mac", "Medium Fries", "Medium Coke"],
+      "price": 8.50
+    },
+    {
+      "name": "McChicken Menu",
+      "items": ["McChicken", "Medium Fries", "Medium Coke"],
+      "price": 8.25
+    },
+    {
+      "name": "Small Menu",
+      "items": ["Big Mac", "Small Fries", "Small Coke"],
+      "price": 7.00
+    }
+  ]
+}
