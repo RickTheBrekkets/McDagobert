@@ -17,3 +17,7 @@ The output shows:
   purchase
 
 The price list and combo deals can be modified in `public/price-list.json`.
+
+For a simplified demo styled with Tailwind CSS, you can also open
+`public/mcsavings.html` which contains everything in a single file and uses a
+placeholder algorithm to pick random deals.

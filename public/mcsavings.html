@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<title>McSavings 🍔💰</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body { background-color: #f2f2f2; }
+  .btn-yellow { background-color: #ffe600; }
+  .btn-red { background-color: #db0007; color: #ffffff; }
+</style>
+</head>
+<body class="min-h-screen p-4">
+  <header class="text-center mb-8">
+    <h1 class="text-3xl font-bold text-red-600">McSavings 🍔💰</h1>
+    <p class="text-lg text-gray-700">De slimste manier om samen te bestellen bij McDonald's</p>
+  </header>
+  <div id="personen" class="space-y-4"></div>
+  <button id="addPerson" class="btn-yellow px-4 py-2 rounded shadow mb-4">+ Voeg persoon toe</button>
+  <div>
+    <button id="bereken" class="btn-red px-4 py-2 rounded shadow">Bereken goedkoopste combinatie</button>
+  </div>
+  <div id="result" class="mt-6 space-y-4"></div>
+<script>
+const menuItems = ['Big Mac','McChicken','Fries','Coke','Chicken Nuggets','Salad'];
+const prices = { 'Big Mac':4.0,'McChicken':4.0,'Fries':2.0,'Coke':2.0,'Chicken Nuggets':3.5,'Salad':3.0 };
+const deals = [
+  {name:'Big Mac Menu',price:8.0},
+  {name:'McChicken Menu',price:7.5},
+  {name:'Family Box',price:15.0}
+];
+function createSelect(){
+  const sel=document.createElement('select');
+  sel.className='border rounded p-1';
+  menuItems.forEach(it=>{
+    const o=document.createElement('option');
+    o.value=it; o.textContent=it; sel.appendChild(o);
+  });
+  return sel;
+}
+function addItem(div){
+  const container=div.querySelector('.items');
+  const row=document.createElement('div');
+  row.className='flex space-x-2';
+  row.appendChild(createSelect());
+  container.appendChild(row);
+}
+function addPerson(){
+  const wrap=document.createElement('div');
+  wrap.className='persoon bg-white rounded shadow p-4 space-y-2';
+  wrap.innerHTML='<input type="text" placeholder="Naam" class="border rounded p-2 w-full person-name"><div class="items space-y-2"></div>';
+  const btn=document.createElement('button');
+  btn.textContent='+ Voeg item toe';
+  btn.className='btn-yellow px-2 py-1 rounded shadow';
+  btn.addEventListener('click',()=>addItem(wrap));
+  wrap.appendChild(btn);
+  document.getElementById('personen').appendChild(wrap);
+  addItem(wrap);
+}
+function berekenBestelling(){
+  const res=document.getElementById('result');
+  res.innerHTML='';
+  let base=0, totaal=0;
+  document.querySelectorAll('.persoon').forEach(div=>{
+    const naam=div.querySelector('.person-name').value||'Anoniem';
+    const items=[...div.querySelectorAll('select')].map(s=>s.value);
+    items.forEach(i=>{ base+=prices[i]||0; });
+    const kaart=document.createElement('div');
+    kaart.className='bg-white rounded shadow p-4';
+    let html=`<h3 class="font-semibold mb-1">${naam}</h3>`;
+    if(Math.random()<0.5){
+      const deal=deals[Math.floor(Math.random()*deals.length)];
+      html+=`<p>Deal gekozen: <span class="font-medium">${deal.name}</span> 🎉</p>`;
+      totaal+=deal.price;
+    }else{
+      html+='<p>Losse items:</p><ul class="list-disc pl-5">';
+      items.forEach(i=>{ html+=`<li>${i}</li>`; totaal+=prices[i]||0; });
+      html+='</ul>';
+    }
+    kaart.innerHTML=html;
+    res.appendChild(kaart);
+  });
+  const besparing=base-totaal;
+  const summary=document.createElement('div');
+  summary.className='bg-yellow-100 p-4 rounded shadow';
+  summary.innerHTML=`<p><strong>Totaal:</strong> €${totaal.toFixed(2)}</p><p><strong>Besparing:</strong> €${besparing.toFixed(2)}</p>`;
+  res.appendChild(summary);
+}
+
+document.getElementById('addPerson').addEventListener('click',addPerson);
+document.getElementById('bereken').addEventListener('click',berekenBestelling);
+addPerson();
+</script>
+</body>
+</html>
