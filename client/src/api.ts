@@ -10,8 +10,9 @@ export type ResultResponse = OptimizeResult & { perMember: MemberShare[] };
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(`/api${path}`, {
-    headers: { 'Content-Type': 'application/json', ...(init?.headers ?? {}) },
     ...init,
+    // Spread init first so its `headers` can't clobber Content-Type.
+    headers: { 'Content-Type': 'application/json', ...(init?.headers ?? {}) },
   });
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
