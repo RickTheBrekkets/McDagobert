@@ -10,3 +10,7 @@ dist/
 # Logs / OS
 *.log
 .DS_Store
+
+# Local demo artifacts
+demo-screenshots.mjs
+shots/
