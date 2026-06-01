@@ -1,0 +1,12 @@
+node_modules/
+dist/
+*.local
+
+# SQLite data files
+*.db
+*.db-shm
+*.db-wal
+
+# Logs / OS
+*.log
+.DS_Store
